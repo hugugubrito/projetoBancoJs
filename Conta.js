@@ -1,13 +1,10 @@
 import { Cliente } from "./Cliente.js";
 
 export class Conta{
-    static numeroDeContas = 0
-
     constructor(saldoinicial, cliente, agencia){
-        this.saldoinicial = saldoinicial;
-        this.cliente = cliente;
-        this.agencia = agencia;
-        ContaCorrente.numeroDeContas += 1;
+        this._saldo = saldoinicial;
+        this._cliente = cliente;
+        this._agencia = agencia;
      }
 
     set cliente(novoValor){
@@ -20,10 +17,16 @@ export class Conta{
         return this._cliente;
     }
 
+    get saldo(){
+        return this._saldo;
+    }
+
     sacar(valor){
-        if(this._saldo >= valor){
-            this._saldo -= valor;
-            return valor;
+        let taxa = 1;
+        const valorSacado = taxa * valor;
+        if(this._saldo >= valorSacado){
+            this._saldo -= valorSacado;
+            return valorSacado;
         }
     }
     depositar(valor){
@@ -36,5 +39,9 @@ export class Conta{
     transferir(valor, conta){
         const valorSacado = this.sacar(valor);
         conta.depositar(valorSacado);
+    }
+
+    teste(){
+        console.log("teste na classe conta");
     }
 }
